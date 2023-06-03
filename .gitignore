@@ -159,7 +159,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 ui_mainwindow.py
-ui/
+ui/ui_mainwindow.py
 Text/
 Databases/
 tools/ParseToolSoup.py
