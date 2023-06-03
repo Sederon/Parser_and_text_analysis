@@ -5,3 +5,4 @@ sumy
 numpy
 praw
 sqlite3
+pandas

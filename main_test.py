@@ -13,5 +13,7 @@ def read_text(file_path):
 # text_proc.print_result()
 
 parse = ParseToolAPI()
-
+data = parse.return_result()
+# print(data[0][['title', 'flair']])
+# print(data[0][data[0]['flair'] == 'Political'][['title', 'flair']])
 

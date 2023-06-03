@@ -1,28 +1,31 @@
 import sqlite3
+import pandas as pd
 
 
 class DataBase:
     def __init__(self, webpage_name: str):
-        self.db_name = 'Databases/html_codes.db'
+        self.db_name = 'Databases/texts_for_analysis.db'
         self.tb_name = webpage_name
 
-    def record_file(self, html_code1: bytes):
-        conn = sqlite3.connect(self.db_name)
-        cursor = conn.cursor()
-        cursor.execute(f"DROP TABLE IF EXISTS {self.tb_name}")
-        cursor.execute(f"CREATE TABLE IF NOT EXISTS {self.tb_name} (id INTEGER PRIMARY KEY, html_code BLOB)")
+        self.conn = None
+        self.cursor = None
 
-        cursor.execute(f"INSERT INTO {self.tb_name} (html_code) VALUES (?)", (html_code1,))
-        conn.commit()
-        conn.close()
+    def connect(self):
+        self.conn = sqlite3.connect(self.db_name)
+        self.cursor = self.conn.cursor()
+        self.cursor.execute(f"CREATE TABLE IF NOT EXISTS {self.tb_name} (id INTEGER PRIMARY KEY, title TEXT, "
+                            f"flair TEXT, content TEXT)")
 
-    def read_file(self):
-        conn = sqlite3.connect(self.db_name)
-        cursor = conn.cursor()
+    def insert_record(self, title, flair, content):
 
-        cursor.execute(f"SELECT * FROM {self.tb_name}")
+        self.cursor.execute(f"INSERT INTO {self.tb_name} (title, flair, content) VALUES (?, ?, ?)",
+                            (title, flair, content))
+        self.conn.commit()
 
-        # Fetch all the rows returned by the SELECT statement
-        rows = cursor.fetchall()
-        conn.close()
-        return rows[0][1]
+    def return_records_df(self):
+        query = f"SELECT title, flair, content FROM {self.tb_name}"
+        return pd.read_sql_query(query, self.conn)
+
+    def close(self):
+        self.cursor.close()
+        self.conn.close()
