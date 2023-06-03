@@ -13,12 +13,13 @@ sum_method = 1  # 0 for cosine method, 1 - LexRank method, 2 - LSA, 3 - Luhn
 # text_proc.print_result()
 
 parse = ParseToolAPI()
+parse.parse()
 data = parse.return_result()
 # print(data[0][['title', 'flair']])
 # print(data[0][data[0]['flair'] == 'Political'][['title', 'flair']])
 # print(data[2].groupby('flair')['title'].count())
 
-print(data[0][data[0]['flair'] == 'Political'][['title', 'flair']])
+print(data[3]['content'])
 
 # for index, row in data[0].iterrows():
 #     try:

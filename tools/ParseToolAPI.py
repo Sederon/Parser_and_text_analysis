@@ -19,6 +19,9 @@ class ParseToolAPI:
                 text = submission.selftext
                 title = submission.title
                 flair = submission.link_flair_text
+                if flair == "" or text == "" or title == "":
+                    number_of_records += 1
+                    continue
                 db.insert_record(title, flair, text)
 
         db.close()
@@ -32,10 +35,11 @@ class ParseToolAPI:
 
     def return_result(self):
         df_discuss = self.read_from_db('Discussion')
-        df_worldnews = self.read_from_db('worldnews')
+        df_relationships = self.read_from_db('relationships')
         df_movies = self.read_from_db('movies')
+        df_books = self.read_from_db('books')
 
-        return df_discuss, df_worldnews, df_movies
+        return df_discuss, df_relationships, df_movies, df_books
 
     def parse(self):
         with open("Text/cid", "r") as file:
@@ -49,7 +53,8 @@ class ParseToolAPI:
             user_agent=USER_AGENT,
         )
 
-        # self.write_in_db('Discussion', 100)
-        # self.write_in_db('worldnews', 100)
-        # self.write_in_db('movies', 100)
+        self.write_in_db('Discussion', 100)
+        self.write_in_db('relationships', 100)
+        self.write_in_db('movies', 100)
+        self.write_in_db('books', 100)
 

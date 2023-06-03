@@ -76,27 +76,32 @@ class TextProcessing:
         return text
 
     def print_result(self):
-        print("Keywords:")
+        str_arr = []
+        str_arr.append("Keywords:")
         for keyword, frequency in self.keywords:
-            print(keyword, "-", frequency)
+            str_arr.append(f"\n{keyword}-{frequency}")
 
-        print("\nPositive: {0: 0.000}, Negative: {1: 0.000}, Neutral:{2: 0.000}\n".format(self.sentiment[0],
+        str_arr.append("\nPositive: {0: 0.000}, Negative: {1: 0.000}, Neutral:{2: 0.000}\n".format(self.sentiment[0],
                                                                                       self.sentiment[1],
                                                                                       self.sentiment[2]))
+        # str_arr.append(f"Pos:{self.emotions[2][0]}, Neg:{self.emotions[2][1]}\n")
 
         for item in self.emotions[0]:
             if item == "anticip" or item == "positive" or item == "negative":
                 continue
-            print("{0}: {1}".format(item, self.emotions[0][item]))
+            str_arr.append("{0}: {1}; ".format(item, self.emotions[0][item]))
 
-        print("\nTop emot: {0}: {1}\n".format(self.emotions[1][0], self.emotions[1][1]))
+        str_arr.append("\nTop emot: {0}: {1}\n".format(self.emotions[1][0], self.emotions[1][1]))
 
-        print("\nSummary of the text:", self.summary)
+        str_arr.append(f"\nSummary of the text: {self.summary[0]}")
 
         # print("Part-of-Speech Tagging:")
         # for i, tagged_sentence in enumerate(self.tagged_sentences):
         #     print("Sentence", i + 1)
         #     print(tagged_sentence)
         #     print()
+
+        return "".join(str_arr)
+
 
 
