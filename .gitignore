@@ -163,3 +163,4 @@ ui/
 Text/
 Databases/
 tools/ParseToolSoup.py
+main_test.py
