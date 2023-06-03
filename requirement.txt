@@ -6,3 +6,4 @@ numpy
 praw
 sqlite3
 pandas
+PyQt5
